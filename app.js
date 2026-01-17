@@ -3,8 +3,8 @@ let entries = [];
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js")
-    .then(() => console.log("SW registrato"))
-    .catch((e) => console.log("SW errore", e));
+    /*.then(() => console.log("SW registrato"))
+    .catch((e) => console.log("SW errore", e));*/
 }
 
 async function unlock() {
