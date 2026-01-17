@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Password Manager</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="login">
+    <h1>Master Password</h1>
+    <input id="master" type="password" placeholder="Inserisci master password">
+    <button onclick="unlock()">Sblocca</button>
+  </div>
+
+  <div id="app" style="display:none;">
+    <h1>Password Manager</h1>
+
+    <div>
+      <input id="tag" placeholder="Tag (es. Netflix)">
+      <input id="user" placeholder="Utente">
+      <input id="pass" placeholder="Password">
+      <button onclick="generate()">Genera</button>
+      <button onclick="saveEntry()">Salva</button>
+    </div>
+
+    <div id="list"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
