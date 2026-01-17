@@ -2,11 +2,10 @@ let key;
 let entries = [];
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/sw.js")
+  navigator.serviceWorker.register("PassEz/sw.js")
     .then(() => console.log("SW registrato"))
     .catch((e) => console.log("SW errore", e));
 }
-
 
 async function unlock() {
   const master = document.getElementById("master").value;
