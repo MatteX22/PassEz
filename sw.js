@@ -1,10 +1,10 @@
 const CACHE_NAME = "app-v1";
 const FILES = [
-  "/",
-  "/index.html",
-  "/app.js",
-  "/style.css",
-  "/manifest.json"
+  "index.html",
+  "app.js",
+  "style.css",
+  "manifest.json",
+  "sw.js"
 ];
 
 self.addEventListener("install", (e) => {
