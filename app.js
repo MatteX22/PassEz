@@ -2,7 +2,7 @@ let key;
 let entries = [];
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("PassEz/sw.js")
+  navigator.serviceWorker.register("sw.js")
     .then(() => console.log("SW registrato"))
     .catch((e) => console.log("SW errore", e));
 }
