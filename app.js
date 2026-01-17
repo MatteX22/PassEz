@@ -1,6 +1,10 @@
 let key;
 let entries = [];
 
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+
 async function unlock() {
   const master = document.getElementById("master").value;
   if (!master) return alert("Inserisci la master password");
