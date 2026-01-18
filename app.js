@@ -3,9 +3,9 @@ let entries = [];
 let editIndex = null;
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js")
-    /*.then(() => console.log("SW registrato"))
-    .catch((e) => console.log("SW errore", e));*/
+  navigator.serviceWorker.register("sw.js").then(reg => {
+    reg.update();
+  });
 }
 
 async function unlock() {
@@ -153,7 +153,6 @@ function updateEntry(i) {
   document.getElementById("user").value = entry.user;
   document.getElementById("pass").value = entry.password;
 }
-
 
 function copyPassword(i) {
   const password = entries[i].password;

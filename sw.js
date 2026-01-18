@@ -1,4 +1,4 @@
-const CACHE_NAME = "app-v2";
+const CACHE_NAME = "app-v3";
 const FILES = [
   "index.html",
   "app.js",
@@ -30,7 +30,6 @@ self.addEventListener("fetch", (e) => {
     caches.match(e.request).then((r) => {
       if (r) return r;
 
-      // se è una navigazione (pagina) usa index.html
       if (e.request.mode === "navigate") {
         return caches.match("index.html");
       }
