@@ -1,5 +1,6 @@
 let key;
 let entries = [];
+let editIndex = null;
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js")
@@ -74,24 +75,66 @@ function render() {
   const list = document.getElementById("list");
   list.innerHTML = "";
 
+  const trTitle = document.createElement("tr");
+  trTitle.innerHTML = `
+    <th>TAG</th>
+    <th>USERNAME</th>
+    <th>PASSWORD</th>
+    <th>COPIA</th>
+    <th>MODIFICA</th>
+    <th>ELIMINA</th>
+  `;
+  list.appendChild(trTitle);
+
   entries.forEach((e, i) => {
-    const div = document.createElement("div");
-    div.innerHTML = `
-      <b>${e.tag}</b> | ${e.user} | ${e.password}
-      <button onclick="deleteEntry(${i})">Elimina</button>
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <th>${e.tag}</th>
+      <th>${e.user}</th>
+      <th id="pass-${i}">*****</th>
+      <th><button onclick="copyPassword(${i})">Copia</button></th>
+      <th><button onclick="updateEntry(${i})">Modifica</button></th>
+      <th><button onclick="deleteEntry(${i})">Elimina</button></th>
     `;
-    list.appendChild(div);
+
+    list.appendChild(tr);
+  });
+
+  document.getElementById("tag").value = "";
+  document.getElementById("user").value = "";
+  document.getElementById("pass").value = "";
+}
+
+function togglePassword() {
+  entries.forEach((e, i) => {
+    const cell = document.getElementById(`pass-${i}`);
+    const current = cell.innerText;
+  
+    if (current === "*****") {
+      cell.innerText = entries[i].password;
+    } else {
+      cell.innerText = "*****";
+    }
   });
 }
 
 function saveEntry() {
   const tag = document.getElementById("tag").value;
   const user = document.getElementById("user").value;
-  const pass = document.getElementById("pass").value;
+  const password = document.getElementById("pass").value;
+  
+  if (!tag || !user || !password) return alert("Compila tutto");
 
-  if (!tag || !user || !pass) return alert("Compila tutto");
+  const entry = { tag, user, password };
 
-  entries.push({ tag, user, password: pass });
+  if (editIndex !== null) {
+    entries[editIndex] = entry;
+  } else {
+    entries.push(entry);
+  }
+
+  editIndex = null;   
   saveVault();
   render();
 }
@@ -100,6 +143,29 @@ function deleteEntry(i) {
   entries.splice(i, 1);
   saveVault();
   render();
+}
+
+function updateEntry(i) {
+  const entry = entries[i];
+  editIndex = i;
+
+  document.getElementById("tag").value = entry.tag;
+  document.getElementById("user").value = entry.user;
+  document.getElementById("pass").value = entry.password;
+}
+
+
+function copyPassword(i) {
+  const password = entries[i].password;
+
+  const temp = document.createElement("input");
+  temp.value = password;
+  document.body.appendChild(temp);
+
+  temp.select();
+  document.execCommand("copy");
+
+  document.body.removeChild(temp);
 }
 
 function generate() {
